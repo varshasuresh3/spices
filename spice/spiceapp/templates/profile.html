@@ -1,0 +1,211 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Spices Auction</title>
+    <link rel="stylesheet" href="{% static 'profile.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="{% static 'images/rb_30305.png' %}" alt="Logo">
+            <span>Spices Auction</span>
+        </div>
+        <div class="nav-links">
+            <a href="" >Home</a>
+            <a href="{% url 'listproduct' %}" >List Product</a>
+            <a href="#">Auctions</a>
+            <a href="{% url 'history' %}">History</a>
+            <a href="#" class="active">Profile</a>
+            <a href="#">About</a>
+            <a href="#footer">Contact Us</a>
+        </div>
+        <div class="logreg">
+            <ion-icon name="notifications" style="font-size: 25px;color: #e65100;"></ion-icon>
+            <a href="#">Logout</a>
+            <!-- <a href="#">Register</a> -->
+        </div>
+        <div class="mobile-menu">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </nav>
+    <!-- Profile Header -->
+    <div class="profile-header">
+        <div class="cover-photo" id="coverPhoto">
+            <button class="edit-cover" onclick="triggerFileInput('coverInput')">
+                <input type="file" id="coverInput" accept="image/*" onchange="handleImageUpload(event, 'cover')" hidden>
+                <i class="fas fa-camera"></i> Change Cover
+            </button>
+        </div>
+        
+        <div class="profile-info">
+            <div class="avatar-container">
+                <img src="images/flat-lay-bowls-with-spices-powder.jpg" alt="Profile Picture" id="profilePic" class="profile-avatar">
+                <button class="edit-avatar" onclick="triggerFileInput('profileInput')">
+                    <i class="fas fa-camera"></i>
+                </button>
+                <input type="file" id="profileInput" accept="image/*" onchange="handleImageUpload(event, 'profile')" hidden>
+            </div>
+            
+            <div class="user-info">
+                <h1>John Doe</h1>
+                <p>Member since January 2024</p>
+                
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-value">45</span>
+                        <span class="stat-label">Auctions Won</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">128</span>
+                        <span class="stat-label">Total Bids</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">98%</span>
+                        <span class="stat-label">Success Rate</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Content -->
+    <div class="profile-content">
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="account">Account</button>
+            <!-- <button class="tab-btn" data-tab="security">Security</button> -->
+            <button class="tab-btn" data-tab="payment">Payment</button>
+            <button class="tab-btn" data-tab="notifications">Notifications</button>
+        </div>
+
+        <!-- Account Tab -->
+        <div class="tab-content active" id="account">
+            <div class="settings-card">
+                <h2>Account Settings</h2>
+                <form id="accountForm" class="settings-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" value="John">
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" value="Doe">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" value="john.doe@example.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" value="+1 (555) 123-4567">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="company">Company Name</label>
+                        <input type="text" id="company" value="Spice Traders Inc.">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <textarea id="address" rows="3">123 Spice Street, Trading Hub, City, Country</textarea>
+                    </div>
+
+                    <button type="submit" class="btn primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- Payment Tab -->
+        <div class="tab-content" id="payment">
+            <div class="settings-card">
+                <h2>Payment Methods</h2>
+                <div class="payment-methods">
+                    <div class="payment-card">
+                        <div class="card-header">
+                            <i class="fab fa-cc-visa"></i>
+                            <button class="delete-btn" onclick="deletePaymentMethod(this)">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-number">**** **** **** 1234</p>
+                            <p class="card-name">John Doe</p>
+                            <p class="card-expiry">Expires 12/25</p>
+                        </div>
+                    </div>
+                    <button class="add-payment-btn">
+                        <i class="fas fa-plus"></i>
+                        Add New Payment Method
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notifications Tab -->
+        <div class="tab-content" id="notifications">
+            <div class="settings-card">
+                <h2>Notification Settings</h2>
+                <div class="notification-settings">
+                    <div class="notification-group">
+                        <h3>Email Notifications</h3>
+                        <div class="notification-option">
+                            <label class="toggle-label">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                                Auction Updates
+                            </label>
+                        </div>
+                        <div class="notification-option">
+                            <label class="toggle-label">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                                Bid Notifications
+                            </label>
+                        </div>
+                        <div class="notification-option">
+                            <label class="toggle-label">
+                                <input type="checkbox">
+                                <span class="toggle-slider"></span>
+                                Newsletter
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="notification-group">
+                        <h3>SMS Notifications</h3>
+                        <div class="notification-option">
+                            <label class="toggle-label">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                                Bid Outbid Alerts
+                            </label>
+                        </div>
+                        <div class="notification-option">
+                            <label class="toggle-label">
+                                <input type="checkbox">
+                                <span class="toggle-slider"></span>
+                                Auction End Reminders
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'profile.js' %}"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

@@ -1,0 +1,438 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>admin page</title>
+    <style>
+         * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+        .navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3px 3%;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    /* gap: 1rem; */
+}
+
+.logo img{
+    width:40px;
+}
+.logo span {
+    margin-left:-10px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #e65100;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+.logreg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.aa{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.logreg .aa{
+    text-decoration: none;
+    background-color:#e65100 ;
+    padding:2px 13px 2px 13px;
+    color: #fff;
+    border-radius: 15px;
+}
+.nav-links a:hover, .nav-links a.active {
+    color: #e65100;
+}
+
+.mobile-menu {
+    display: none;
+}
+.section-header{
+            margin-bottom:30px;
+        }
+.banner{
+            margin-top:60px;
+            position: relative;
+        }
+        .banner img{
+            width:100vw;
+            height:30vw;
+            object-fit: cover;
+            object-position:center 15px;
+            filter: brightness(60%)
+        }
+        .bannertext{
+            position: absolute;
+            top: 40%;
+            left: 38%;
+            color: #fff;
+        }
+        .bannertext h6{
+            font-weight: 400;
+        }
+        .main-content {
+            padding: 2rem;
+            max-width: 1500px;
+            margin: 0 auto;
+        }
+
+        .section {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h2 {
+            color: #f4511e;
+            margin-bottom: 1rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f4511e;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        td {
+            text-align: center;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        .thd th{
+            text-align: center;
+        }
+        .thdr td{
+            text-align: center;
+        }
+        td img{
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+     }
+     .btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-approve {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .btn-approve:hover {
+            background-color: #218838;
+        }
+
+        .btn-reject {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-reject:hover {
+            background-color: #c82333;
+        }
+        .Submited{
+        border: none;
+        background-color: #419c82;
+        color: white;
+        padding: 6px;
+        font-weight: 600;
+        cursor: pointer;
+        border-radius: 100px;
+        width: 100px;
+     }
+     .cancell{
+        border: none;
+        background-color:red;
+        color: white;
+        padding: 6px;
+        font-weight: 600;
+        cursor: pointer;
+        border-radius: 100px;
+        width: 100px;
+        
+     }
+     .requests-section{
+            margin-top: 100px;
+        }
+        .footer {
+    background: #333;
+    color: white;
+    padding: 4rem 10% 2rem;
+    margin-top:100px;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 3rem;
+    margin-bottom: 2rem;
+}
+
+.footer-section h3 {
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+}
+
+.footer-section a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 0.8rem;
+    transition: color 0.3s ease;
+}
+
+.footer-section a:hover {
+    color: #e65100;
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-links a {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.social-links a:hover {
+    background: #e65100;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.banner2{
+    width: 100%;
+    height: 85px;
+    background-color: #f7f7f7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 100px;
+}
+
+.banner2 p{
+    font-weight: 700;
+}
+
+.snipImg{
+    height: 85px;
+}
+
+.slogans2{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 80px;
+    margin-bottom: 40px;
+}
+.designelement1{
+    border: solid #e65100 2px;
+    width: 100px;
+}
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <!-- <img src="{% static 'images/rb_30305.png' %}" alt="Logo"> -->
+            <dotlottie-player src="https://lottie.host/2d91b95a-174d-4f94-93ba-57b556a8bde2/Yho8FKEF8S.lottie" background="transparent" speed="2" style="width: 80px; height:80px" loop autoplay></dotlottie-player>
+            <span>Spices Auction</span>
+        </div>
+        <div class="nav-links">
+            <a href="{% url 'home' %}">Home</a>
+            {% if request.user.username == 'admin' %}
+            <a href="{% url 'adminpage' %}" >Pending</a>
+            <a href="{% url 'adminapproved' %}" class="active">Approved</a>
+
+            {% else %}
+            <a href="{% url 'listproduct' %}">List Product</a>
+            <a href="{% url 'auction' %}">Auctions</a>
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'dashboard' %}">dashboard</a>
+            {% endif %}
+            {%endif%}
+            <a href="#footer">About</a>
+            <a href="#footer">Contact Us</a>
+        </div>
+        <div class="logreg">
+            {% if request.user.is_authenticated %}
+            <!-- <a href="{% url 'notification' %}"><ion-icon name="notifications" style="font-size:21px;color: #e65100;margin-top: 7px;"></ion-icon></a> -->
+            <a href="{% url 'logout' %}" class="aa">Logout</a>
+            {% else %}
+            <a href="{% url 'login' %}" class="aa">Login</a>
+            <a href="{% url 'register' %}" class="aa">Register</a>
+            {% endif %}
+        </div>
+        <div class="mobile-menu">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </nav>
+
+    <div class="banner">
+        <img src="{% static 'images/adminpending.jpg' %}" alt="">
+        <div class="bannertext">
+            <h1>Spices Auction Approved Here</h1>
+            <center><h6>Discover Premium Quality Spices from Around the World</h6></center>
+        </div>
+    </div>
+    <div class="banner2">
+        <div>
+            <p>How it Works</p>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: center; gap:80px ; background-color: #f0f4f7; height: 100%;">
+            <img src="{% static 'images/snip1.png' %}" alt="" class="snipImg">
+            <p>List Product</p>
+            <p>Place Bid</p>
+            <p>Complete Sale</p>
+            <img src="{% static 'images/snip2.png' %}" alt="" class="snipImg">
+        </div>
+        <div>
+            <p>Receive Spice</p>
+        </div>
+    </div>
+
+    <div class="slogans2">
+        <p style="font-size: 14px; font-weight: 500;margin-bottom: 10px; color: grey;">Approve Spices Now</p>
+        <p style="font-size: 35px; font-weight: 700; margin-bottom: 15px;">Welcome To Spices Auction</p>
+        <p style="font-size: 16px; font-weight: 500;margin-bottom: 10px; color: grey; text-align: center;">Discover the finest selection of premium spices from around the world. Our auction platform connects <br> spice producers directly with buyers.</p>
+        <hr class="designelement1">
+    </div>
+
+    <div class="requests-section" >
+        <div class="section-header">
+            <center><h2> Approved Spices Auctions</h2></center>
+            
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    
+                    <th>NO</th>
+                    <th>Photo</th>
+                    <th>Product Name</th>
+                    <th>Orgin</th>
+                    <th>Quality</th>
+                    <th>Category</th>
+                    <th>Quantity</th>
+                    <th>Starting ₹</th>
+                    <th>Reserve ₹</th>
+                    <th>Certified</th>
+                    <th>Bid tll</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in spice %}
+                <tr>
+                    <td>{{i.id}}</td>
+                    <td><img src="{{i.product_image.url}}" alt=""></td>
+                    <td>{{i.product_name}}</td>
+                    <td>{{i.origin}}</td>
+                    <td>{{i.quality}}</td>
+                    <td>{{i.category}}</td>
+                    <td>{{i.quantity}} Kg</td>
+                    <td>{{i.starting_price}}</td>
+                    <td>{{i.reserve_price}}</td>
+                    <td>{{i.certified}}</td>
+                    <td>{{i.auction_duration}} Hour</td>
+                   <td>
+                    <a href=""><button class="Submited">Submited</button></a>
+                    <a href="{% url 'cancellproduct' pk=i.pk %}"><button class="cancell">Cancell</button></a>
+                    </td>
+                </tr>
+                   {% endfor %}
+            
+            </tbody>
+
+        </table>
+    </div>
+    <footer class="footer" id="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-phone"></i> +1 234 567 890</p>
+                <p><i class="fas fa-envelope"></i> deepdigits.in</p>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Chelakkara, deepdigits</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="#">About Us</a>
+                <a href="#">Terms & Conditions</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">FAQ</a>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Spices Auction Platform. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+</body>
+</html>

@@ -1,0 +1,604 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spice Auction Cards</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            scroll-behavior: smooth;
+        }
+        .navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3px 3%;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    /* gap: 1rem; */
+}
+
+.logo img{
+    width:40px;
+}
+.logo span {
+    margin-left:-10px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #e65100;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+.logreg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.aa{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.logreg .aa{
+    text-decoration: none;
+    background-color:#e65100 ;
+    padding:2px 13px 2px 13px;
+    color: #fff;
+    border-radius: 15px;
+}
+.nav-links a:hover, .nav-links a.active {
+    color: #e65100;
+}
+
+.mobile-menu {
+    display: none;
+}
+
+        body {
+            background-color: #f5f5f5;
+            /* padding: 20px; */
+        }
+        a{
+            text-decoration: none;
+        }
+        .container {
+            margin-top:100px;
+            /* max-width: 1200px; */
+            width: 100%;
+            display:flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            /* display: grid; */
+            /* grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); */
+            gap: 10px;
+            padding-left: 40px;
+            /* height:500px; */
+            /* overflow-y: scroll; */
+
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            width:350px;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 200px;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .product-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .origin {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .bid-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .price {
+            font-size: 20px;
+            font-weight: 600;
+            color: #f4511e;
+        }
+
+        .time-left {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .bid-form {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .bid-input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .bid-input::placeholder {
+            color: #999;
+        }
+
+        .bid-button {
+            background: #f4511e;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .bid-button:hover {
+            background: #e64a19;
+        }
+
+        .product-details {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .available {
+            color: #333;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+
+        .view-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: #ffffff;
+            color: #e64a19;
+            border: 1px solid #e64a19;
+            border-radius: 6px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .view-button:hover {
+            background: #e64a19;
+            color: #ffffff;
+            border-color: #e64a19;
+        }
+        .footer {
+    background: #333;
+    color: white;
+    padding: 4rem 10% 2rem;
+    margin-top:500px;
+
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 3rem;
+    margin-bottom: 2rem;
+}
+
+.footer-section h3 {
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+}
+
+.footer-section a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 0.8rem;
+    transition: color 0.3s ease;
+}
+
+.footer-section a:hover {
+    color: #e65100;
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-links a {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.social-links a:hover {
+    background: #e65100;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+        @media (max-width: 640px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <!-- <img src="{% static 'images/rb_30305.png' %}" alt="Logo"> -->
+            <dotlottie-player src="https://lottie.host/2d91b95a-174d-4f94-93ba-57b556a8bde2/Yho8FKEF8S.lottie" background="transparent" speed="2" style="width: 80px; height:80px" loop autoplay></dotlottie-player>
+            <span>Spices Auction</span>
+        </div>
+        <div class="nav-links">
+            <a href="{% url 'home' %}">Home</a>
+            {% if request.user.username == 'admin' %}
+            <a href="{% url 'adminpage' %}">Pending</a>
+            <a href="{% url 'adminapproved' %}">Approved</a>
+
+            {% else %}
+            <a href="{% url 'listproduct' %}">List Product</a>
+            <a href="{% url 'auction' %}" class="active">Auctions</a>
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'dashboard' %}">dashboard</a>
+            {% endif %}
+            {%endif%}
+            <a href="#footer">About</a>
+            <a href="#footer">Contact Us</a>
+        </div>
+        <div class="logreg">
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'notification' %}"><ion-icon name="notifications" style="font-size:21px;color: #e65100;margin-top: 7px;"></ion-icon></a>
+            <a href="{% url 'logout' %}" class="aa">Logout</a>
+            {% else %}
+            <a href="{% url 'login' %}" class="aa">Login</a>
+            <a href="{% url 'register' %}" class="aa">Register</a>
+            {% endif %}
+        </div>
+        <div class="mobile-menu">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </nav>
+    <div class="container">
+        <!-- Card 1 -->
+         {% for i in spice %}
+        <div class="card">
+            <div class="card-image">
+                <img src="{{i.product_image.url}}" alt="Black Pepper">
+            </div>
+            <div class="card-content">
+                <h2 class="product-name">{{i.product_name}}</h2>
+                <p class="origin">Origin: {{i.origin}} | Seller: {{i.user.first_name}} {{i.user.last_name}}</p>
+                <!-- <p class="origin"></p> -->
+                <div class="bid-info">
+                   
+                    <span class="price">₹{{i.bid_price}}/{{i.quantity}}kg</span>
+                    <!-- <p>Time Left: <span id="timer-{{ i.id }}" data-end-time="{{ i.end_time|date:'Y-m-d\\TH:i:s' }}"></span></p> -->
+                    <!-- <span id="timer-24" data-end-time="2025-02-08T18:00:00"></span> -->
+                    {% if not i.is_ended %}
+                    <span id="timer-{{ i.id }}" 
+                    data-duration="{{ i.auction_duration }}" style="color: red;">
+                    {% else %}
+                    Auction Ended
+                    {% endif %}
+              </span>                
+                    <!-- <span class="time-left">2h 13m left</span> -->
+                </div>
+                {% if not i.is_ended %}
+                {% if request.user.is_authenticated %}
+                <form class="bid-form" method="post" action="{% url 'conformbid' i.pk %}">
+                    {% csrf_token %}
+                    <input type="text" class="bid-input" name="bidamount" placeholder="Enter bid amount">
+                    <button type="submit" class="bid-button">Bid</button>
+                </form>
+                {% endif %}
+                {% endif %}
+                <div style="display: flex;align-items: center;justify-content: space-between;">
+                    <div>
+                        <p class="product-details">{{i.quality}} | {{i.certified}}</p>
+                        <p class="available">Available: {{i.quantity}} Kg</p>
+                    </div>
+                    <div style="display: flex; gap:3px;">
+                        <p style="color: rgb(0, 166, 33);font-weight: 400;">{{i.bid}} bids</p>
+                        <dotlottie-player src="https://lottie.host/29cf0375-5a12-4274-9546-683fee59eba6/VtNHWdKAsf.lottie" background="transparent" speed="1" style="width: 25px; height: 25px" loop autoplay></dotlottie-player>
+                    </div>
+                </div>
+                <a href="{% url 'singleproduct_view' pk=i.pk %}"><button class="view-button">View Details</button></a>
+            </div>
+            {% if i.is_ended %}
+            <center><p style="color: red;margin-bottom: 10px;">You can not bid right now</p></center>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+        <!-- Card 2 -->
+        <!-- <div class="card">
+            <div class="card-image">
+                <img src="/placeholder.svg?height=200&width=280" alt="Green Cardamom">
+            </div>
+            <div class="card-content">
+                <h2 class="product-name">Green Cardamom</h2>
+                <p class="origin">Origin: Karnataka</p>
+                <div class="bid-info">
+                    <span class="price">₹1,200/kg</span>
+                    <span class="time-left">4h 28m left</span>
+                </div>
+                <div class="bid-form">
+                    <input type="text" class="bid-input" placeholder="Enter bid amount">
+                    <button class="bid-button">Bid</button>
+                </div>
+                <p class="product-details">Premium Quality | Export Grade</p>
+                <p class="available">Available: 200 kg</p>
+                <button class="view-button">View Details</button>
+            </div>
+        </div> -->
+
+        <!-- Card 3 -->
+        <!-- <div class="card">
+            <div class="card-image">
+                <img src="/placeholder.svg?height=200&width=280" alt="Ceylon Cinnamon">
+            </div>
+            <div class="card-content">
+                <h2 class="product-name">Ceylon Cinnamon</h2>
+                <p class="origin">Origin: Tamil Nadu</p>
+                <div class="bid-info">
+                    <span class="price">₹900/kg</span>
+                    <span class="time-left">1h 43m left</span>
+                </div>
+                <div class="bid-form">
+                    <input type="text" class="bid-input" placeholder="Enter bid amount">
+                    <button class="bid-button">Bid</button>
+                </div>
+                <p class="product-details">Pure Ceylon | Hand Rolled</p>
+                <p class="available">Available: 300 kg</p>
+                <button class="view-button">View Details</button>
+            </div>
+        </div> -->
+
+        <!-- Card 4 -->
+        <!-- <div class="card">
+            <div class="card-image">
+                <img src="/placeholder.svg?height=200&width=280" alt="Premium Cloves">
+            </div>
+            <div class="card-content">
+                <h2 class="product-name">Premium Cloves</h2>
+                <p class="origin">Origin: Kerala</p>
+                <div class="bid-info">
+                    <span class="price">₹850/kg</span>
+                    <span class="time-left">5h 18m left</span>
+                </div>
+                <div class="bid-form">
+                    <input type="text" class="bid-input" placeholder="Enter bid amount">
+                    <button class="bid-button">Bid</button>
+                </div>
+                <p class="product-details">Grade A | Organic</p>
+                <p class="available">Available: 150 kg</p>
+                <button class="view-button">View Details</button>
+            </div>
+        </div> -->
+    </div>
+    <footer class="footer" id="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-phone"></i> +1 234 567 890</p>
+                <p><i class="fas fa-envelope"></i> deepdigits.in</p>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Chelakkara, deepdigits</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="#">About Us</a>
+                <a href="#">Terms & Conditions</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">FAQ</a>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Spices Auction Platform. All rights reserved.</p>
+        </div>
+    </footer>
+    <!-- <script>
+        function startCountdown() {
+            document.querySelectorAll("[id^=timer-]").forEach(timer => {
+                let productId = timer.id.split("-")[1]; // Extract product ID
+                let duration = parseInt(timer.dataset.duration, 10); // Get auction duration in minutes
+    
+                if (isNaN(duration) || duration <= 0) {
+                    timer.innerText = "Invalid Timer";
+                    return;
+                }
+    
+                // Check if auction start time exists in localStorage
+                let startTime = localStorage.getItem(`auction_start_${productId}`);
+    
+                if (!startTime) {
+                    startTime = new Date().getTime(); // Set current time as auction start time
+                    localStorage.setItem(`auction_start_${productId}`, startTime);
+                }
+    
+                let endTime = parseInt(startTime) + duration * 60 * 1000; // Calculate end time
+    
+                function updateTimer() {
+                    let now = new Date().getTime();
+                    let timeLeft = endTime - now;
+    
+                    if (timeLeft > 0) {
+                        let minutes = Math.floor(timeLeft / (1000 * 60));
+                        let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                        timer.innerText = `${minutes}m ${seconds}s`;
+                    } else {
+                        timer.innerText = "Auction Ended";
+                        clearInterval(timer.intervalId); // Stop updating
+                        localStorage.removeItem(`auction_start_${productId}`); // Remove timer when auction ends
+                    }
+                }
+    
+                // Run immediately and update every second
+                updateTimer();
+                timer.intervalId = setInterval(updateTimer, 1000);
+            });
+        }
+    
+        window.onload = startCountdown;
+    </script> -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>  
+    <script>
+        function startCountdown() {
+            document.querySelectorAll("[id^=timer-]").forEach(timer => {
+                let productId = timer.id.split("-")[1]; // Extract product ID
+                let duration = parseInt(timer.dataset.duration, 10); // Get auction duration in minutes
+    
+                if (isNaN(duration) || duration <= 0) {
+                    timer.innerText = "Invalid Timer";
+                    return;
+                }
+    
+                // Check if auction start time exists in localStorage
+                let startTime = localStorage.getItem(`auction_start_${productId}`);
+    
+                if (!startTime) {
+                    startTime = new Date().getTime(); // Set current time as auction start time
+                    localStorage.setItem(`auction_start_${productId}`, startTime);
+                }
+    
+                let endTime = parseInt(startTime) + duration * 60 * 1000; // Calculate end time
+    
+                function updateTimer() {
+                    let now = new Date().getTime();
+                    let timeLeft = endTime - now;
+    
+                    if (timeLeft > 0) {
+                        let minutes = Math.floor(timeLeft / (1000 * 60));
+                        let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                        timer.innerText = `${minutes}m ${seconds}s`;
+                    } else {
+                        timer.innerText = "Auction Ended";
+                        location.reload()
+                        clearInterval(timer.intervalId); // Stop updating
+                        localStorage.removeItem(`auction_start_${productId}`); // Remove timer when auction ends
+                        
+                        // 🔥 Send request to mark auction as ended
+                        fetch(`/update-auction-status/${productId}/`, {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "X-CSRFToken": getCSRFToken()
+                            },
+                            body: JSON.stringify({ is_ended: true })
+                        }).then(response => response.json())
+                          .then(data => console.log("Auction ended:", data))
+                          .catch(error => console.error("Error:", error));
+                    }
+                }
+    
+                // Function to get CSRF token from cookies
+                function getCSRFToken() {
+                    let cookieValue = null;
+                    if (document.cookie && document.cookie !== "") {
+                        let cookies = document.cookie.split(";");
+                        for (let i = 0; i < cookies.length; i++) {
+                            let cookie = cookies[i].trim();
+                            if (cookie.startsWith("csrftoken=")) {
+                                cookieValue = cookie.substring("csrftoken=".length, cookie.length);
+                                break;
+                            }
+                        }
+                    }
+                    return cookieValue;
+                }
+    
+                // Run immediately and update every second
+                updateTimer();
+                timer.intervalId = setInterval(updateTimer, 1000);
+            });
+        }
+    
+        window.onload = startCountdown;
+    </script>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>  
+<script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+
+</body>
+</html>

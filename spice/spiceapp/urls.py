@@ -1,0 +1,25 @@
+from django.urls import path
+from . import views
+urlpatterns = [
+    path('',views.Home,name='home'),
+    path('adminpage/',views.adminpage,name='adminpage'),
+    path('payment/',views.payment,name='payment'),
+    path('addpayment/',views.addpayment,name='addpayment'),
+    path('singleproduct_view/int:<pk>',views.singleproduct_view,name='singleproduct_view'),
+    path('dashboard/',views.dashboard,name='dashboard'),
+    path('listproduct/',views.listproduct,name='listproduct'),
+    path('auction/',views.auction,name='auction'),
+    path('register/',views.register,name='register'),
+    path('login/',views.loginview,name='login'),
+    path('logout/',views.user_logout,name='logout'),
+    path('addproducts/',views.addproducts,name='addproducts'),
+    path('notification/',views.notification,name='notification'),
+    path('product_approve/int:<pk>',views.product_approve,name='product_approve'),
+    path('adminapproved/',views.adminapproved,name='adminapproved'),
+    path('cancellproduct/int:<pk>',views.cancellproduct,name='cancellproduct'),
+    path('conformbid/int:<pk>',views.conformbid,name='conformbid'),
+    path('updateprofile/',views.updateprofile,name='updateprofile'),
+    path('pricePrediction/',views.pricePrediction,name='pricePrediction'),
+    path('recommendation/',views.product_price_prediction,name='recommendation'),
+     path("update-auction-status/<int:product_id>/",views.update_auction_status, name="update_auction_status"),
+]

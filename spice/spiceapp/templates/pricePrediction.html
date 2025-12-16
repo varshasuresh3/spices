@@ -1,0 +1,187 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spices Auction Platform</title>
+    <link rel="stylesheet" href="{% static 'listproduct.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <!-- <img src="{% static 'images/rb_30305.png' %}" alt="Logo"> -->
+            <dotlottie-player src="https://lottie.host/2d91b95a-174d-4f94-93ba-57b556a8bde2/Yho8FKEF8S.lottie" background="transparent" speed="2" style="width: 80px; height:80px" loop autoplay></dotlottie-player>
+            <span style="margin-left:-10px;">Spices Auction</span>
+        </div>
+        <div class="nav-links">
+            <a href="{% url 'home' %}" >Home</a>
+            {% if request.user.username == 'admin' %}
+            <a href="{% url 'adminpage' %}">Pending</a>
+            <a href="{% url 'adminapproved' %}">Approved</a>
+
+            {% else %}
+            <a href="{% url 'listproduct' %}" class="active">List Product</a>
+            <a href="{% url 'auction' %}">Auctions</a>
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'dashboard' %}">dashboard</a>
+            {% endif %}
+            {%endif%}
+            <a href="#footer">About</a>
+            <a href="#footer">Contact Us</a>
+        </div>
+        <div class="logreg">
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'notification' %}" style="background-color: transparent;color:#e65100;font-size: 20px;"><ion-icon name="notifications" ></ion-icon></a>
+            <a href="{% url 'logout' %}" class="aa">Logout</a>
+            {% else %}
+            <a href="{% url 'login' %}" class="aa">Login</a>
+            <a href="{% url 'register' %}" class="aa">Register</a>
+            {% endif %}
+        </div>
+        <div class="mobile-menu">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </nav>  
+<div class="formsuppercontainer" style="display: flex;align-items: center;justify-content: center;padding-bottom: 50px;padding-top: 20px;">
+    <div class="form-container">
+        <h1>Dynamic Price Recommendation</h1>
+        <form action="{% url 'recommendation' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="product-name">Product Name*</label>
+                <input type="text" id="product-name" name="product_name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="category">Category*</label>
+                <select id="category" required name="category">
+                    <option value="">Select Category</option>
+                    <option value="Sweet Spices">Sweet Spices</option>
+                    <option value="Pangent Spices">Pangent Spices</option>
+                    <option value="Earthy Spices">Earthy Spices</option>
+                    <option value="Spicy/Hot Spices">Spicy/Hot Spices</option>
+                    <option value="Aromatic Spices">Aromatic Spices</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="category">Quality*</label>
+                <select id="category" required name="quality">
+                    <option value="">Select Quality</option>
+                    <option value="Grade A+">Grade A+</option>
+                    <option value="Premium Quality">Premium Quality</option>
+                    <option value="Pure Ceylon">Pure Ceylon</option>
+                    <option value="Export Grade">Export Grade</option>
+                </select>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="starting-price">Starting Price*</label>
+                    <input type="number" id="starting-price" name="starting_price" required>
+                </div>
+                <div class="form-group">
+                    <label for="reserve-price">Reserve Price*</label>
+                    <input type="number" id="reserve-price" name="reserve_price" required>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="form-group">
+                    <label for="quantity">Quantity (KG)*</label>
+                    <input type="number" id="quantity" name="quantity" required>
+                </div>
+                <div class="form-group">
+                    <label for="duration">Auction Duration*</label>
+                    <select id="duration" required name="auction_duration">
+                        <option value="1">1 Minutes</option>
+                        <option value="5">2 Minutes</option>
+                        <option value="12">5 Minutes</option>
+                        <option value="24">5 Minutes</option>
+                        <option value="48">30 Minutes</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                
+                <div class="form-group">
+                    <label for="duration">Listing Time*</label>
+                    <input type="time" name="listing_time" id="">
+                </div>
+                <div class="form-group">
+                    <label for="duration">Certified*</label>
+                    <select id="duration" required name="certified">
+                        <option value="Organic Certified">Organic Certified</option>
+                        <option value="Not Organic Certified">Not Organic Certified</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Product Description*</label>
+                <textarea id="description" rows="6" required name="description"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="origin">Origin*</label>
+                <input type="text" id="origin" required name="origin">
+            </div>
+
+            <!-- <div class="upload-area">
+                <div class="upload-icon">⬆️</div>
+                <p>Drag & Drop or Click to Upload Image</p>
+                <input type="file" class="file-input" name="product_image">
+            </div>
+            <div>
+                <label for="account">Upload live portrait Video of the spice*</label>
+                <input type="file" name="video" id="" required placeholder="Upload live video">
+            </div> -->
+            <!-- <h2>Payment Details</h2> -->
+            
+            
+
+            <button type="submit" class="submit-btn">Get Recommendation</button>
+        </form>
+    </div>
+</div>
+
+
+    <footer class="footer" id="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-phone"></i> +1 234 567 890</p>
+                <p><i class="fas fa-envelope"></i> deepdigits.in</p>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Chelakkara, deepdigits</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="#">About Us</a>
+                <a href="#">Terms & Conditions</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">FAQ</a>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Spices Auction Platform. All rights reserved.</p>
+        </div>
+    </footer>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+</body>
+</html>

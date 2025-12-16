@@ -1,0 +1,242 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            /* background: linear-gradient(to bottom right, #277f91, #c1e6c1); */
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3px 3%;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo img{
+    width:40px;
+}
+.logo span {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #e65100;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+.logreg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.aa{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.logreg .aa{
+    text-decoration: none;
+    background-color:#e65100 ;
+    padding:2px 13px 2px 13px;
+    color: #fff;
+    border-radius: 15px;
+}
+.nav-links a:hover, .nav-links a.active {
+    color: #e65100;
+}
+
+.mobile-menu {
+    display: none;
+}
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-bottom: 5px;
+            color: #666;
+        }
+        input, textarea {
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        input[type="file"] {
+            padding: 5px;
+        }
+        textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+        button {
+            background-color: #e65100;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 15px;
+        }
+        button:hover {
+            background-color: #000;
+           
+        }
+        .profile-pic-preview {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 10px auto;
+            display: none;
+        }
+        .switch-form {
+            text-align: center;
+            /* margin-top: 10px; */
+        }
+        .switch-form button {
+            background-color: transparent;
+            color: #007bff;
+        }
+        .switch-form button:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+        .top{
+            font-size: 25px;
+        }
+        .top a{
+            text-decoration: none;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="top"><a href="{% url 'home' %}"><ion-icon name="arrow-back-circle"></ion-icon></a></div>
+        <div class="spicelogo">
+            <div style="margin-bottom:-45px;"><center><dotlottie-player src="https://lottie.host/2d91b95a-174d-4f94-93ba-57b556a8bde2/Yho8FKEF8S.lottie" background="transparent" speed="2" style="width: 150px; height:150px" loop autoplay></dotlottie-player></center></div>
+            <!-- <h2 id="formTitle">LOGIN</h2> -->
+        </div>
+        <h2>Registration</h2>
+        <form id="registrationForm" method="post" enctype="multipart/form-data" action="{% url 'register' %}">
+            {% csrf_token %}
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required pattern="^[A-Za-z\s]+$"  
+            title="Username is not valid">
+
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" required pattern="^[A-Za-z\s]+$" 
+            title="First name should only contain letters">
+
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" required pattern="^[A-Za-z\s]+$" 
+            title="Last name should only contain letters">
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required title="Please enter a valid email address">
+
+            <label for="date">Date</label>
+            <input type="date" name="date" id="date" required title="Enter today's date">
+
+
+            <label for="phoneNumber">Phone Number:</label>
+            <input type="tel" id="phoneNumber" name="phoneNumber" required pattern="^(?!0{10}$)\d{10}$" 
+            title="Phone number must be 10 digits">
+
+            <label for="address">Address:</label>
+            <textarea id="address" name="address" required></textarea>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password"  title="Password must contain at least one letter, one number, one special character, and be at least 7 characters long." required>
+            <!-- <label for="confirmPassword">Confirm Password:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required> -->
+
+            <label for="profilePic">Profile Picture:</label>
+            <input type="file" id="profilePic" name="profilePic" accept="image/*">
+            <img id="profilePicPreview" class="profile-pic-preview" alt="Profile picture preview">
+
+            <button type="submit">Register</button>
+        </form>
+        <div class="switch-form">
+            <a href="{% url 'login' %}"><button ">Already a user-Login</button></a>
+        </div>
+    </div>
+
+    <script>
+        const profilePicInput = document.getElementById('profilePic');
+        const profilePicPreview = document.getElementById('profilePicPreview');
+
+        profilePicInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    profilePicPreview.src = e.target.result;
+                    profilePicPreview.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // document.getElementById('registrationForm').addEventListener('submit', function(e) {
+        //     e.preventDefault();
+            
+        //     alert('Registration form submitted! In a real application, this data would be sent to the server.');
+        // });
+
+    </script>
+      <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+      <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+      <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+</body>
+</html>

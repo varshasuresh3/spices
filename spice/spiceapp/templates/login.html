@@ -1,0 +1,228 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Register</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3px 3%;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo img{
+    width:40px;
+}
+.logo span {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #e65100;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+.logreg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.aa{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.logreg .aa{
+    text-decoration: none;
+    background-color:#e65100 ;
+    padding:2px 13px 2px 13px;
+    color: #fff;
+    border-radius: 15px;
+}
+.nav-links a:hover, .nav-links a.active {
+    color: #e65100;
+}
+
+.mobile-menu {
+    display: none;
+}
+        .container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        .top{
+            font-size: 25px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            margin-top: 20px;
+        }
+        input {
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #e65100;
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 1rem;
+        }
+        button:hover {
+            background-color: #000;
+        }
+        .switch-form {
+            text-align: center;
+            margin-bottom:1rem ;
+            
+        }
+        .switch-form button {
+            background-color: transparent;
+            color: #007bff;
+            
+            /* text-decoration: underline; */
+
+        }
+        .switch-form button:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+        .forgot-password {
+            text-align: right;
+            margin-bottom: 1rem;
+        }
+        .forgot-password a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+        .head{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            
+            
+        }
+        .head1{
+            
+            /* height: 110px; */
+            width: 70px;
+            /* border-radius: 50%; */
+
+           
+        }
+        .top a{
+            text-decoration: none;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <div class="top"><a href="{% url 'home' %}"><ion-icon name="arrow-back-circle"></ion-icon></a></div>
+        <div class="spicelogo">
+            <div style="margin-bottom:-40px;"><center><dotlottie-player src="https://lottie.host/2d91b95a-174d-4f94-93ba-57b556a8bde2/Yho8FKEF8S.lottie" background="transparent" speed="2" style="width: 150px; height:150px" loop autoplay></dotlottie-player></center></div>
+            <h2 id="formTitle">LOGIN</h2>
+        </div>
+        <div class="head" style="display:flex;"> 
+            <!-- <div><center><h3 style="font-weight: 600;color: #e65100;">SPICESAUCTION</h3></center></div>   -->
+        <!-- <h2 id="formTitle">LOGIN</h2> -->
+        </div>
+        <form id="authForm" action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            <input type="text" id="username" name="username" placeholder="Username/Email" required>
+            <input type="password" id="password" name="password" placeholder="Password" required >
+            <div class="forgot-password">
+                <a href="#" onclick="alert('Password recovery functionality would be implemented here.')">Forgot Password?</a>
+            </div>
+            <button type="submit" id="submitButton">Login </button>
+        </form>
+        {% if error_message %}
+        <center><p style="color: red;">{{ error_message }}</p></center>
+        {% endif %}
+        <div class="switch-form">
+            <a href="{% url 'register' %}"><button>New user- Register</button></a>
+        </div>
+    </div>
+
+    <script>
+        // let isLoginForm = true;
+
+        // function switchForm() {
+        //     isLoginForm = !isLoginForm;
+        //     const formTitle = document.getElementById('formTitle');
+        //     const submitButton = document.getElementById('submitButton');
+        //     const switchButton = document.querySelector('.switch-form button');
+
+        //     if (isLoginForm) {
+        //         formTitle.textContent = 'Login';
+        //         submitButton.textContent = 'Login';
+        //         switchButton.textContent = 'Switch to Register';
+        //     } else {
+        //         formTitle.textContent = 'Register';
+        //         submitButton.textContent = 'Register';
+        //         switchButton.textContent = 'Switch to Login';
+        //     }
+        // }
+
+        // document.getElementById('authForm').addEventListener('submit', function(e) {
+        //     e.preventDefault();
+        //     const action = isLoginForm ? 'Login' : 'Registration';
+        //     alert(${action} functionality would be implemented here.);
+        // });
+    </script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+</body>
+</html>

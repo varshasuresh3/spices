@@ -1,0 +1,621 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>User Dashboard</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+            scroll-behavior: smooth;
+        }
+        .navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3px 3%;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    /* gap: 1rem; */
+}
+
+.logo img{
+    width:40px;
+}
+.logo span {
+    margin-left:-10px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #e65100;
+}
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    background-color:transparent;
+}
+.logreg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.aa{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.logreg .aa{
+    text-decoration: none;
+    background-color:#e65100 ;
+    padding:2px 13px 2px 13px;
+    color: #fff;
+    border-radius: 15px;
+}
+.nav-links a:hover, .nav-links a.active {
+    color: #e65100;
+}
+
+.mobile-menu {
+    display: none;
+}
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3 {
+            margin-bottom: 20px;
+        }
+        
+        /* Header styles */
+        header {
+            margin-top:60px;
+            background-color: #ffffff;
+            color: #000000;
+            padding: 20px 0;
+        }
+        header h1 {
+            margin-bottom: 0;
+        }
+        
+        /* Dashboard grid layout */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        /* Card styles */
+        .card {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        /* Profile summary styles */
+        .profile-summary {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .profile-picture img{
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            /* background-color: #ddd; */
+            /* margin-right: 20px; */
+        }
+        .profile-info h2 {
+            margin-bottom: 10px;
+        }
+        .profile-info{
+            margin-left: 20px;
+        }
+        /* Table styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+            /* text-align: center; */
+        }
+        a{
+            text-decoration: none;
+        }
+        /* Status styles */
+        .status {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        .winning { background-color: #d4edda; color: #155724; }
+        .losing { background-color: #f8d7da; color: #721c24; }
+        .active { background-color: #cce5ff; color: #004085; }
+        .completed { background-color: #e2e3e5; color: #383d41; }
+        
+        /* Form styles */
+        form {
+            display: grid;
+            gap: 10px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #e65100;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        /* button:hover {
+            background-color: #ffffff;
+            color: #e65100;
+        } */
+        
+        /* Add product button styles */
+        .add-product-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .footer {
+    background: #333;
+    color: white;
+    padding: 4rem 10% 2rem;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 3rem;
+    margin-bottom: 2rem;
+}
+
+.footer-section h3 {
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+}
+
+.footer-section a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 0.8rem;
+    transition: color 0.3s ease;
+}
+
+.footer-section a:hover {
+    color: #e65100;
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-links a {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.social-links a:hover {
+    background: #e65100;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+        
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <!-- <img src="{% static 'images/rb_30305.png' %}" alt="Logo"> -->
+            <dotlottie-player src="https://lottie.host/2d91b95a-174d-4f94-93ba-57b556a8bde2/Yho8FKEF8S.lottie" background="transparent" speed="2" style="width: 80px; height:80px" loop autoplay></dotlottie-player>
+            <span>Spices Auction</span>
+        </div>
+        <div class="nav-links">
+            <a href="{% url 'home' %}" >Home</a>
+            {% if request.user.username == 'admin' %}
+            <a href="{% url 'adminpage' %}">Pending</a>
+            <a href="{% url 'adminapproved' %}">Approved</a>
+
+            {% else %}
+            <a href="{% url 'listproduct' %}">List Product</a>
+            <a href="{% url 'auction' %}">Auctions</a>
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'dashboard' %}" class="active">dashboard</a>
+            {% endif %}
+            {%endif%}
+            <a href="#footer">About</a>
+            <a href="#footer">Contact Us</a>
+        </div>
+        <div class="logreg">
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'notification' %}"><ion-icon name="notifications" style="font-size:21px;color: #e65100;margin-top: 7px;"></ion-icon></a>
+            <a href="{% url 'logout' %}" class="aa">Logout</a>
+            {% else %}
+            <a href="{% url 'login' %}" class="aa">Login</a>
+            <a href="{% url 'register' %}" class="aa">Register</a>
+            {% endif %}
+        </div>
+        <div class="mobile-menu">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </nav>
+    <header>
+        <div class="container">
+            <center><h1>User Dashboard</h1></center>
+        </div>
+    </header>
+    
+    <main class="container">
+        <section class="profile-summary card">
+            <div style="display: flex;justify-content: space-between;">
+                <div style="display: flex;align-items: center;justify-content:space-between;">
+                    <div class="profile-picture"><img src="{{profile.profilePic.url}}" alt="">  <div class="wallet" style="margin-right:0px;">
+                        <p style="background-color: #ededed;padding:0px 6px 0px 6px;border-radius:17px;margin-top:10px;color: #10882c;font-weight: 700;"><span style="color:#e65100;font-weight: 500;">Balance : </span>{{profile.balance}} ₹</p>
+                    </div></div>
+                    <div class="profile-info">
+                        <h2><span style="color: #e65100;">Welcome,</span> {{profile.user.first_name}} {{profile.user.last_name}}</h2>
+                        <p>Member since: {{profile.date}}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <div class="dashboard-grid">
+            <section class="active-bids card">
+                <h2>Active Bids</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Current Bid</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in bids %}
+                        <tr>
+                            <td>{{i.product.product_name}}</td>
+                            <td>₹{{i.bid_price}}</td>
+                            {% if i.status == "losing" %}
+                            <td><span class="status winning" style="color: rgb(171, 0, 0);background-color: rgb(247, 190, 190);">Losing</span></td>
+                            {% else %}
+                            <td><span class="status winning">Winning</span></td>
+                            {% endif %}
+                            <td>{{i.product.created}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+            
+            <section class="products-listed card">
+                <h2>Products Listed</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Starting Bid</th>
+                            <th>Bid</th>
+                            <th>Current Bid</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in listed %}
+                        <tr>
+                            <td>{{i.product_name}}</td>
+                            <td>₹{{i.starting_price}}</td>
+                            <td>{{i.bid}}</td>
+                            <td>₹{{i.bid_price}}</td>
+                            {% if i.is_approved and i.is_ended == False %}
+                            <td><span class="status active">Active <ion-icon name="timer-outline"></ion-icon></span></td>
+                            {% elif i.is_ended %}
+                            <td><span class="status active" style="background-color: rgb(255, 183, 183);color: rgb(163, 0, 0);">Closed</span></td>
+                            {% else %}
+                            <td><span class="status active" style="background-color: rgb(232, 232, 232);color: rgb(89, 89, 89);">Pending</span></td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+            
+            <section class="transaction-history card">
+                <h2>Transaction History</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Client Phone</th>
+                            <th>Final Price</th>
+                            <th>Date</th>
+                            <th>Buyer/Seller</th>
+                            <th>payment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for b in bidsSold %}
+                        <tr>
+                            <td>{{b.name}}</td>
+                            <td>{{b.phone}}</td>
+                            <td>₹{{b.price}}</td>
+                            <td>{{b.date}}</td>
+                            <td >Sold to:<p style="font-weight: 700;">{{b.sold_to}}</p></td>
+                            {% if not b.paid %}
+                            <td><p  style="color: #10882c;font-weight:600;">Pending</p></td>
+                            {% else %}
+                            <td><p  style="color: #10882c;font-weight:600;">Recieved</p></td>
+                        
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                        <!-- <h3>Bought Bids</h3> -->
+                        {% for b in bidsBought %}
+                        <tr>
+                            <td>{{b.name}}</td>
+                            <td>{{b.phone}}</td>
+                            <td>₹{{b.price}}</td>
+                            <td>{{b.date}}</td>
+                            <td>Brought From: <p style="font-weight: 700;">{{b.bought_from}}</p></td>
+                           
+                            <!-- <td><a href="{% url 'payment' %}"><button style="width:fit-content;">PAY {{b.price}} ₹</button></a></td> -->
+                           {% if not b.paid %}
+                            <td><a href="{% url 'payment' %}?amount={{ b.price }}&sold={{ b.bought_from|urlencode }}&pk={{ b.pk }}"><button style="width:fit-content;">PAY ₹{{ b.price }}</button></a></td>
+                            {% else %}
+                            <td><p  style="color: #10882c;font-weight:600;">Paid</p></td>
+                            <!-- <p></p> -->
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                        <!-- <tr>
+                            <td>Nutmeg</td>
+                            <td>$250</td>
+                            <td>2023-06-10</td>
+                            <td>Bought from: Mike Johnson</td>
+                        </tr> -->
+                    </tbody>
+                </table>
+            </section>
+            
+            <section class="profile-management card">
+                <h2>Profile Management</h2>
+                <form id="profile-form" method="post" action="{% url 'updateprofile' %}">
+                    {% csrf_token %}
+                    <label for="name">First Name:</label>
+                    <input type="text" id="name" name="firstname" value="{{profile.user.first_name}}" required pattern="^[A-Za-z\s]+$"  
+                    title="Username is not valid">
+
+                    <label for="name">Last Name:</label>
+                    <input type="text" id="name" name="lastname" value="{{profile.user.last_name}}" required pattern="^[A-Za-z\s]+$"  
+                    title="Username is not valid">
+                    
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" value="{{profile.user.email}}" required>
+
+                    <label for="address">Address:</label>
+                    <textarea id="address" name="address" value="" ariaaluemax="{{profile.address}}" required>{{profile.address}}</textarea>
+
+                    <label for="name">Phone:</label>
+                    <input type="number" id="name" name="phone" value="{{profile.phoneNumber}}" required "   pattern="^(?!0{10}$)\d{10}$" title="Phone number must be 10 digits">
+                    
+                    <button >Update Profile</button>
+                </form>
+            </section>
+        </div>
+        
+        <section class="add-product card">
+            <h2>Add New Product for Auction</h2>
+            <p>Ready to list a new item? Click the button below to get started!</p>
+            <a href="{% url 'listproduct' %}"><button id="add-product-btn" class="add-product-btn">Add New Product</button></a>
+        </section>
+    </main>
+    
+    <!-- Add Product Modal -->
+    <div id="add-product-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Add New Product for Auction</h2>
+            <form id="add-product-form">
+                <label for="product-name">Product Name:</label>
+                <input type="text" id="product-name" name="product-name" required>
+                
+                <label for="product-description">Description:</label>
+                <textarea id="product-description" name="product-description" rows="4" required></textarea>
+                
+                <label for="starting-bid">Minimum Starting Bid:</label>
+                <input type="number" id="starting-bid" name="starting-bid" min="0" step="0.01" required>
+                
+                <label for="product-image">Upload Image:</label>
+                <input type="file" id="product-image" name="product-image" accept="image/*" required>
+                
+                <label for="auction-duration">Auction Duration:</label>
+                <select id="auction-duration" name="auction-duration" required>
+                    <option value="1">1 day</option>
+                    <option value="3">3 days</option>
+                    <option value="5">5 days</option>
+                    <option value="7">7 days</option>
+                </select>
+                
+                <button type="submit">List Product</button>
+                
+            </form>
+        </div>
+    </div>
+    <footer class="footer" id="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-phone"></i> +1 234 567 890</p>
+                <p><i class="fas fa-envelope"></i> deepdigits.in</p>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Chelakkara, deepdigits</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="#">About Us</a>
+                <a href="#">Terms & Conditions</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">FAQ</a>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Spices Auction Platform. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        // Modal functionality
+        const modal = document.getElementById("add-product-modal");
+        // const btn = document.getElementById("add-product-btn");
+        const span = document.getElementsByClassName("close")[0];
+        
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+        
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+        
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+        
+        // Form submission handling (for demonstration purposes)
+        // document.getElementById("profile-form").onsubmit = function(e) {
+        //     e.preventDefault();
+        //     alert("Profile updated successfully!");
+        // }
+        
+        document.getElementById("add-product-form").onsubmit = function(e) {
+            e.preventDefault();
+            alert("Product listed successfully!");
+            modal.style.display = "none";
+        }
+    </script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+</body>
+</html>
