@@ -4,6 +4,7 @@ You can paste this directly into README.md.
 🌶️ Spices Auction Platform (AI Integrated)
 An AI-powered web-based auction platform for spice trading, built using Django.
 The system enables secure real-time bidding while integrating AI for smart price prediction and fraud detection.
+
 🚀 Features
 🔐 User Authentication (Buyer / Seller / Admin)
 ⏳ Live Auction System
@@ -13,6 +14,7 @@ The system enables secure real-time bidding while integrating AI for smart price
 📊 Admin Dashboard
 📱 Responsive Mobile-Friendly UI
 🧠 AI Capabilities
+
 Price Prediction Model
 Predicts optimal auction starting price using historical data.
 Fraud Detection
