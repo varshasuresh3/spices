@@ -62,7 +62,7 @@ spices-auction-platform/
 1️⃣ Clone Repository
 Bash
 Copy code
-git clone https://github.com/your-username/spices-auction-platform.git
+git clone https://github.com/varshasuresh3/spices-auction-platform.git
 cd spices-auction-platform
 2️⃣ Create Virtual Environment
 Bash
